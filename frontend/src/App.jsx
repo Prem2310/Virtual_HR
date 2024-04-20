@@ -90,7 +90,7 @@
 //       };
 //       recognition.onend = () => {
 //         setIsListening(false);
-        
+
 //       };
 //       recognition.start();
 //       setIsListening(true);
@@ -121,7 +121,6 @@
 //       setInputText(data.question);
 //       handleTextToSpeech();
 
-
 //     }catch(e){
 //       console.log(e);
 //       console.log("error in fetching question");
@@ -133,10 +132,10 @@
 //     setAnswers({});
 //     questioncall();
 //     setStart(false);
-    
+
 //   }
 //   return (
-    
+
 //     <div className='App'>
 //       <h1>Virtual Assistant</h1>
 //       {
@@ -145,22 +144,22 @@
 //       { !start && <button type="button" onClick={()=>startInterview}>Start Interview</button>}
 //       </div>
 //       <div>
-//       {start && 
+//       {start &&
 //           <div>
-//               <button type="button" 
+//               <button type="button"
 //               onClick={()=>isSpeakinguser?handleStopListening:handleStartListening }
 //               className={`${isSpeakingAI}?"disabled":"visible"` }>
 //                 {`${isSpeakinguser}?"Answer":"Stop"`}
 //               </button>
 //               <button type="button" onClick={()=>handleAnswer}>Done</button>
 //           </div>
-          
+
 //           }
 //       </div>
 //       </>
 //       }
 //     </div>
-    
+
 //   );
 // }
 
@@ -176,14 +175,14 @@
 //       >
 //         {isSpeaking ? <RiMicOffFill /> : <BsMicFill />}
 //       </button>
-     
+
 //     </div>
 //     <div className='flex gap-2'>
 //       <button onClick={isListening ? handleStopListening : handleStartListening}
 //       className='bg-slate-900 text-white px-3 py-2  rounded-md'>
-        
+
 //         {isListening ? 'Stop Listening' : 'Start Listening'}
-        
+
 //       </button>
 //       <button
 //         onClick={handleAnswer}
@@ -205,35 +204,37 @@
 //     <p>{answer}</p>
 //   </div>
 // ))} */}
-import './App.css';
-import { useState } from 'react';
+import "./App.css";
+import Login from "./pages/login";
+import SignUp from "./pages/signup";
+import { useState } from "react";
 
 function App() {
-  const api = 'http://localhost:3000';
+  const api = "http://localhost:3000";
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState({});
   const [start, setStart] = useState(true);
-  const [outputText, setOutputText] = useState('');
+  const [outputText, setOutputText] = useState("");
   const [isSpeakinguser, setIsSpeakinguser] = useState(false);
   const [isListening, setIsListening] = useState(false);
   const [isSpeakingAI, setIsSpeakingAI] = useState(false);
   const [recognition, setRecognition] = useState(null);
   const [completion, setCompletion] = useState(false);
-  const [inputText, setInputText] = useState('');
+  const [inputText, setInputText] = useState("");
   const questions = [
-    'Tell me about yourself',
-    'What was your percentage in the last semester?',
+    "Tell me about yourself",
+    "What was your percentage in the last semester?",
     "What's the project you have done?",
-    'Why should we hire you?',
-    'Do you have any experience or internship done for the same role?',
+    "Why should we hire you?",
+    "Do you have any experience or internship done for the same role?",
   ];
 
   const sendResponse = async () => {
     try {
       const response = await fetch(`${api}/api/v1/updateemployee`, {
-        method: 'PUT',
+        method: "PUT",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ answers: answers }),
       });
@@ -241,12 +242,12 @@ function App() {
       console.log(data);
     } catch (e) {
       console.log(e);
-      console.log('Error in sending response');
+      console.log("Error in sending response");
     }
   };
 
   const handleAnswer = () => {
-    if (outputText === '') {
+    if (outputText === "") {
       return;
     }
     setAnswers((prevAnswers) => ({
@@ -254,30 +255,32 @@ function App() {
       inputText: outputText,
     }));
     setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
-    setOutputText('');
+    setOutputText("");
     questionCall(questions[currentQuestionIndex]);
   };
 
   const handleTextToSpeech = () => {
-    if ('speechSynthesis' in window && !isSpeakingAI) {
+    if ("speechSynthesis" in window && !isSpeakingAI) {
       setIsSpeakingAI(true);
       const synthesis = window.speechSynthesis;
-      const utterance = new SpeechSynthesisUtterance(questions[currentQuestionIndex]);
+      const utterance = new SpeechSynthesisUtterance(
+        questions[currentQuestionIndex]
+      );
       utterance.onend = () => {
         setIsSpeakingAI(false);
-        if (questions[currentQuestionIndex] === 'Thank You') {
+        if (questions[currentQuestionIndex] === "Thank You") {
           setCompletion(true);
           sendResponse();
         }
       };
       synthesis.speak(utterance);
     } else {
-      console.error('Speech synthesis not supported');
+      console.error("Speech synthesis not supported");
     }
   };
 
   const handleStartListening = () => {
-    if ('webkitSpeechRecognition' in window) {
+    if ("webkitSpeechRecognition" in window) {
       const recognition = new window.webkitSpeechRecognition();
       recognition.continuous = true;
       recognition.interimResults = true;
@@ -287,7 +290,7 @@ function App() {
         setOutputText(transcript);
       };
       recognition.onerror = (event) => {
-        console.error('Speech recognition error:', event.error);
+        console.error("Speech recognition error:", event.error);
       };
       recognition.onend = () => {
         setIsListening(false);
@@ -297,7 +300,7 @@ function App() {
       setIsSpeakingAI(false);
       setRecognition(recognition);
     } else {
-      console.error('Speech recognition not supported');
+      console.error("Speech recognition not supported");
     }
   };
 
@@ -308,21 +311,24 @@ function App() {
     }
   };
 
-  const questionCall = async (prevRes = '') => {
+  const questionCall = async (prevRes = "") => {
     try {
       const response = await fetch(`${api}/api/v1/getquestion`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ currentQuestionIndex: currentQuestionIndex, previousResponse: prevRes }),
+        body: JSON.stringify({
+          currentQuestionIndex: currentQuestionIndex,
+          previousResponse: prevRes,
+        }),
       });
       const data = await response.json();
       setInputText(data.question);
       handleTextToSpeech();
     } catch (e) {
       console.log(e);
-      console.log('Error in fetching question');
+      console.log("Error in fetching question");
     }
   };
 
@@ -334,23 +340,36 @@ function App() {
   };
 
   return (
-    <div className='App'>
+    <div className="App">
+      <Login />
+      <SignUp />
+
       <h1>Virtual Assistant</h1>
-      {completion ===true? 
-      (
+      {completion === true ? (
         <h1>Thank You</h1>
       ) : (
         <>
           <div>
-            {!start && <button type='button' onClick={startInterview}>Start Interview</button>}
+            {!start && (
+              <button type="button" onClick={startInterview}>
+                Start Interview
+              </button>
+            )}
           </div>
           <div>
             {start && (
               <div>
-                <button type='button' onClick={isSpeakinguser ? handleStopListening : handleStartListening}>
-                  {isSpeakinguser ? 'Stop' : 'Answer'}
+                <button
+                  type="button"
+                  onClick={
+                    isSpeakinguser ? handleStopListening : handleStartListening
+                  }
+                >
+                  {isSpeakinguser ? "Stop" : "Answer"}
                 </button>
-                <button type='button' onClick={handleAnswer}>Done</button>
+                <button type="button" onClick={handleAnswer}>
+                  Done
+                </button>
               </div>
             )}
           </div>
