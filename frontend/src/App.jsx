@@ -1,3 +1,4 @@
+
 import './App.css';
 import { useState } from 'react';
 import { Route, Routes } from 'react-router';
@@ -6,7 +7,7 @@ import { Route, Routes } from 'react-router';
 // import { RiMicOffFill } from "react-icons/ri";
 
 function App() {
-  //const api = process.env.REACT_APP_BACKEND_API;
+
   
   return (
     
@@ -20,6 +21,7 @@ function App() {
 
     </div> 
     
+
   );
 }
 
