@@ -3,6 +3,7 @@ const Employee = require('../models/Employee');
 const bcrypt = require('bcrypt');
 const axios = require("axios");
 const jwt = require('jsonwebtoken');
+const OpenAI  = require('openai');
 require("dotenv").config();
 const signup = async (req, res) => {
     try {
@@ -145,39 +146,78 @@ const questions = [
 'Do you have any experience or internship done for the same role?',
 ];
 const getquestion = async(req,res)=>{
-    console.log(req.body);
+    console.log(req);
+
    try{
-    console.log("hello");
     const { currentQuestionIndex, previousResponse } = req.body;
-
-    if (currentQuestionIndex >= questions.length) {
-      return res.status(200).json({ message: 'All questions have been answered.' });
-    }
-
-    const systemPrompt = 'You are an HR manager conducting an interview. Ask the candidate a question. If you are done with all the question end the interview with just "Thankyou" ';
-    const userPrompt = `${previousResponse} . Any other questions ?` || questions[currentQuestionIndex];
-
-    const messages = [
-      { role: 'system', content: systemPrompt },
-      { role: 'user', content: userPrompt },
-    ];
-    const data = {
-      model: 'gpt-3.5-turbo',
-      messages,
-      temperature: 0.7,
-    };
-
-    const headers = {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
-    };
-
-    const response = await axios.post(process.env.OPENAI_API_URL, data, { headers });
-    const result = response.data.choices[0].message.content;
-     return res.status(200).json({ question: userPrompt, result });
+    const openai = new OpenAI({
+    apiKey: process.env["OPENAI_API_KEY"], // This is the default and can be omitted
+    });
+      const chatCompletion = await openai.chat.completions.create({
+      messages: [
+        {
+          role: "system",
+          content: "You are an HR manager virtual assistant. Your task is to ask questions to the candidate and evaluate their answers.",
+        },
+        {
+          role: "system",
+          content: "You always respond with a JSON object with the following format: { 'question': '' }",
+        },
+        {
+          role: "user",
+          content: `${
+            
+           `${ previousResponse}. Next Question` || questions[currentQuestionIndex] 
+          } `,
+        },
+      ],
+      model: "gpt-3.5-turbo",
+      response_format: {
+        type: "json_object",
+      },
+    });
+    const responseData = JSON.parse(chatCompletion.choices[0].message.content);
+    return res.json(responseData);
   } catch (error) {
-    console.error('Error:', error);
-    return res.status(500).json({ error: 'An error occurred while fetching the question.' });
+    console.error("Error:", error);
+    return res.status(500).json({ error: "An error occurred while processing the request." });
   }
 };
+    // console.log("hello");
+    // const { currentQuestionIndex, previousResponse } = req.body;
+
+    // if (currentQuestionIndex >= questions.length) {
+    //   return res.status(200).json({ message: 'All questions have been answered.' });
+    // }
+
+    // const systemPrompt = 'You are an HR manager conducting an interview. Ask the candidate a question. If you are done with all the question end the interview with just "Thankyou" ';
+    // const userPrompt = `${previousResponse} . Any other questions ?` || questions[currentQuestionIndex];
+
+    // const messages = [
+    //   { role: 'system', content: systemPrompt },
+    //   { role: 'user', content: userPrompt },
+    // ];
+    // const data = {
+    //   model: 'gpt-3.5-turbo',
+    //   messages,
+    //   temperature: 0.7,
+    // };
+
+    // const headers = {
+    //   'Content-Type': 'application/json',
+    //   'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
+    // };
+
+    // const response = await axios.post(process.env.OPENAI_API_URL, data, { headers });
+    // const result = response.data.choices[0].message.content;
+    //  return res.status(200).json({ question: userPrompt, result });
+//   } catch (error) {
+//     console.error('Error:', error);
+//     return res.status(500).json({ error: 'An error occurred while fetching the question.' });
+//   }
+// };
 module.exports = { login,signup, updateEmployee, getEmployee, getEmployees ,getquestion};
+
+
+
+
