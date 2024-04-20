@@ -1,27 +1,22 @@
-
-import './App.css';
-import { useState } from 'react';
-import { Route, Routes } from 'react-router';
-// import { BsMicFill } from "react-icons/bs";
-
-// import { RiMicOffFill } from "react-icons/ri";
+import "./App.css";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Login from "./pages/login";
+import Signup from "./pages/signup";
+import Home from "./pages/home";
+import Hero from "./pages/Hero";
 
 function App() {
-
-  
   return (
-    
-    <div className='App'>
-     <Routes >
-     <Route path="/login" component={Login} />
-     <Route path="/signup" component={Signup} />
-    <Route path="/home" component={Home} />
-      </Routes>
-      
-
-    </div> 
-    
-
+    <div className="App">
+      <Router>
+        <Routes>
+          <Route path="/" element={<Hero />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/home" element={<Home />} />
+        </Routes>
+      </Router>
+    </div>
   );
 }
 
