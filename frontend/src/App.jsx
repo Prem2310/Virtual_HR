@@ -4,7 +4,7 @@ import Login from "./pages/login";
 import Signup from "./pages/signup";
 import Home from "./pages/home";
 import Hero from "./pages/Hero";
-
+import { Experience } from "./components/Experience";
 function App() {
   return (
     <div className="App">
@@ -14,6 +14,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/home" element={<Home />} />
+          <Route path="/experience" element={<Experience />} />
         </Routes>
       </Router>
     </div>
