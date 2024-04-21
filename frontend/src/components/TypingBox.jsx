@@ -65,8 +65,8 @@ export const TypingBox = () => {
   };
   const handleStart = async () => {
     handleTextToSpeech();
-      const currentIndex = questions.indexOf(question);
-     setQuestion(questions[currentIndex + 1]);
+    const currentIndex = questions.indexOf(question);
+    setQuestion(questions[currentIndex + 1]);
     setStart(false);
   };
 
@@ -96,10 +96,10 @@ export const TypingBox = () => {
 
     // Logic for updating the question
     if (questions && questions.length > 0) {
-      const currentIndex = questions.indexOf(question);
+      const currentIndex = questions.indexOf(question - 1);
       if (currentIndex < questions.length - 1) {
         handleTextToSpeech();
-        setQuestion(questions[currentIndex + 1]);
+        setQuestion(questions[currentIndex]);
       }
       // setInputText("");
     }
