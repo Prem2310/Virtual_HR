@@ -16,13 +16,15 @@ import { MessagesList } from "./MessagesList";
 import { Teacher } from "./Teacher";
 import { TypingBox } from "./TypingBox";
 
+import Grad from "../assets/Hero Shape.svg";
+
 const itemPlacement = {
   default: {
     classroom: {
       position: [0.2, -1.7, -2],
     },
     teacher: {
-      position: [-1, -1.7, -3],
+      position: [-2, -1.7, -3],
     },
     board: {
       position: [0.45, 0.382, -6],
@@ -44,44 +46,55 @@ export const Experience = () => {
   const classroom = useAITeacher((state) => state.classroom);
 
   return (
-    <div className='!important w-screen h-screen'>
-      <div className="z-10 md:justify-center fixed bottom-4 left-4 right-4 flex gap-3 flex-wrap justify-stretch">
-        <TypingBox />
+    <>
+      <div className="!important w-screen h-screen bg-black">
+        <div className="flex justify-center items-center ">
+          <img
+            src={Grad}
+            className="absolute z-0 w-screen translate-y-10 opacity-120"
+            alt=""
+          />
+        </div>
+
+        <div className="!important w-screen h-screen">
+          <div className="z-10 md:justify-center fixed bottom-4 left-4 right-4 flex gap-3 flex-wrap justify-stretch">
+            <TypingBox />
+          </div>
+          <Leva hidden />
+          <Loader />
+          <Canvas
+            camera={{
+              position: [0, 0, 0.0001],
+            }}
+          >
+            <CameraManager />
+
+            <Suspense>
+              <Float speed={0.5} floatIntensity={0.2} rotationIntensity={0.1}>
+                <Html
+                  transform
+                  {...itemPlacement[classroom].board}
+                  distanceFactor={1}
+                >
+                  <MessagesList />
+                  <BoardSettings />
+                </Html>
+                <Environment preset="sunset" />
+                <ambientLight color="pink" />
+
+                <Teacher
+                  teacher={teacher}
+                  key={teacher}
+                  {...itemPlacement[classroom].teacher}
+                  scale={1.5}
+                  rotation-y={degToRad(20)}
+                />
+              </Float>
+            </Suspense>
+          </Canvas>
+        </div>
       </div>
-      <Leva hidden />
-      <Loader />
-      <Canvas
-        camera={{
-          position: [0, 0, 0.0001],
-        }}
-      >
-        <CameraManager />
-
-        <Suspense>
-          <Float speed={0.5} floatIntensity={0.2} rotationIntensity={0.1}>
-            <Html
-              transform
-              {...itemPlacement[classroom].board}
-              distanceFactor={1}
-            >
-              <MessagesList />
-              <BoardSettings />
-            </Html>
-            <Environment preset="sunset" />
-            <ambientLight color="pink" />
-
-            
-            <Teacher
-              teacher={teacher}
-              key={teacher}
-              {...itemPlacement[classroom].teacher}
-              scale={1.5}
-              rotation-y={degToRad(20)}
-            />
-          </Float>
-        </Suspense>
-      </Canvas>
-    </div>
+    </>
   );
 };
 
