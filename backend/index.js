@@ -18,7 +18,7 @@ app.get("/", (req, res) => {
     }
 ); 
 app.post("/api/v1/signup",signup);
-app.get("/api/v1/login",login);
+app.post("/api/v1/login",login);
 app.post("/api/v1/getquestion", getquestion);
 app.put("/api/v1/updateemployee",auth,isEmployee,updateEmployee);
 app.get('/api/v1/getemployee/:id',auth,isAdmin,getEmployee);

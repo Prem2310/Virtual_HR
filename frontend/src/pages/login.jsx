@@ -31,14 +31,13 @@ export default function Login() {
       email,
       password,
     };
-    await fetch(`${URL}/api/v1/auth/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(toSend),
-    })
-      .then((res) => res.json())
+    await fetch(`${URL}/api/v1/login`, {
+  method: "POST", // Change the method to POST
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify(toSend),
+    }).then((res) => res.json())
       .then((data) => {
         if (data.err) {
           toast.error(data.err, {

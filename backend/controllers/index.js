@@ -42,6 +42,7 @@ const signup = async (req, res) => {
 const login = async (req, res) => {
   try {
     //get data from req body
+    console.log(req.body);
     const { email, password } = req.body;
     console.log(email, password);
     //validate data
