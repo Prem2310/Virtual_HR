@@ -1,4 +1,4 @@
-import { useAITeacher } from '../hooks/useAITeacher';
+// import { useAITeacher } from '../hooks/useAITeacher';
 import { useState } from "react";
 import { BsMicFill } from "react-icons/bs";
 import { BsFillMicMuteFill } from "react-icons/bs";
@@ -94,9 +94,9 @@ export const TypingBox = () => {
   };
   const handleSaveText = () => {
   setSavedTextObject((prev) => {
-    const newTextObject = { question, inputText };
+    const newTextObject = { "question":question, "answer":inputText };
     if (!prev) {
-      return [newTextObject];
+      return savedTextObject[newTextObject];
     }
     return [...prev, newTextObject];
   });
@@ -105,8 +105,8 @@ export const TypingBox = () => {
   if (questions && questions.length > 0) {
     const currentIndex = questions.indexOf(question);
     if (currentIndex < questions.length - 1) {
-      setQuestion(questions[currentIndex + 1]);
       handleTextToSpeech();
+      setQuestion(questions[currentIndex + 1]);
       
     }
     setInputText("");
