@@ -72,8 +72,8 @@ export const TypingBox = () => {
           obj,
         }),
       });
-      console.log("shity code bitchy life",updateans);
-      console.log("baby you tell me ",savedTextObject);
+      console.log("data ",updateans);
+      console.log("data saved",savedTextObject);
     } catch (err) {
       console.log(err);
     }
@@ -163,7 +163,8 @@ const handleSaveText = () => {
           <p>{inputText}</p>
         </div>
       ) : (
-        <h1>Thankyou</h1>
+        <a href="/">
+        <p>Thankyou</p></a>
       )}
 
       {/* {loading ? (

@@ -154,7 +154,7 @@ export default function SignUp() {
         <img
           src={SignUpImage}
           alt="Sign Up Image"
-          className="h-[95vh] w-[95vw]"
+          className="h-[100vh] w-[95vw]"
         />
         <ToastContainer />
       </section>

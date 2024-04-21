@@ -61,7 +61,7 @@ export default function Login() {
             progress: undefined,
           });
           setTimeout(() => {
-            navigate("/Experience");
+            navigate("/interview");
           }, 2000);
         }
       });
