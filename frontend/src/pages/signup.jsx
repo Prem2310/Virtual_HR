@@ -1,5 +1,4 @@
-import SignUpImage from "../assets/images/signup.webp";
-import { Textarea } from "@chakra-ui/react";
+import SignUpImage from "../assets/images/signup.png";
 import { useNavigate } from "react-router-dom";
 import { useRef } from "react";
 import { ToastContainer, toast } from "react-toastify";

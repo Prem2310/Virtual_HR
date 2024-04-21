@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Eye from "../assets/images/eye.svg";
-import LoginImg from "../assets/images/login.webp";
+import LoginImg from "../assets/images/LoginImg.png";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";

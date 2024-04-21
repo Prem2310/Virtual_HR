@@ -1,5 +1,4 @@
-
-import { useAITeacher } from '../hooks/useAITeacher';
+import { useAITeacher } from "../hooks/useAITeacher";
 import {
   CameraControls,
   Environment,
@@ -71,10 +70,10 @@ export const Experience = () => {
             <Environment preset="sunset" />
             <ambientLight color="pink" />
 
-            {/* <Gltf
+            <Gltf
               src={`/models/classroom_${classroom}.glb`}
               {...itemPlacement[classroom].classroom}
-            /> */}
+            />
             <Teacher
               teacher={teacher}
               key={teacher}
