@@ -31,6 +31,14 @@ export const TypingBox = () => {
       const resultIndex = event.resultIndex;
       const transcript = event.results[resultIndex][0].transcript;
       setInputText(transcript);
+      // setSavedTextObject((prev)=>{
+      //   if(!prev){
+      //     return {question,transcript};
+      //   }else{
+      //     return [...prev,{question,transcript}];
+      //   }
+      
+      // })
     };
 
     recognition.onerror = (event) => {
@@ -46,23 +54,31 @@ export const TypingBox = () => {
     setRecognition(recognition);
   };
 
-  const update = async () => {
+  const update = async (obj) => {
     try {
-      const updateans = await fetch(`${api}/update`, {
-        method: "POST",
+      const user = JSON.parse(localStorage.getItem("user")) || "";
+      console.log(user);
+      console.log("id pubilc",user._id);
+
+
+
+
+      const updateans = await fetch(`${api}/api/v1/updateemployee/${user._id}`, {
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          savedTextObject,
+          obj,
         }),
       });
-      console.log(updateans);
-      console.log(savedTextObject);
+      console.log("shity code bitchy life",updateans);
+      console.log("baby you tell me ",savedTextObject);
     } catch (err) {
       console.log(err);
     }
   };
+  
   const handleStart = async () => {
     const currentIndex = questions.indexOf(question);
     setQuestion(questions[currentIndex + 1]);
@@ -90,13 +106,29 @@ const handleSaveText = () => {
   const currentIndex = questions.indexOf(question);
   if (currentIndex < questions.length - 1) {
     handleTextToSpeech();
+    setSavedTextObject((prev)=>{
+        if(!prev){
+          return [{question,inputText}];
+        }else{
+          return [...prev,{question,inputText}];
+        }
+      
+      })
     setQuestion(questions[currentIndex + 1]); // Move to the next question
   }
   
   // Logic for ending the conversation
   if (currentIndex === questions.length - 1) {
-    setEndconvo(true); // Set end conversation flag to true
-    update(); // Update saved text or perform other necessary actions
+    setEndconvo(true);
+    // setSavedTextObject((prev)=>{
+    //     if(!prev){
+    //       return {question,inputText};
+    //     }else{
+    //       return [...prev,{question,inputText}];
+    //     }
+      
+    //   })// Set end conversation flag to true
+    update(savedTextObject); // Update saved text or perform other necessary actions
     return; // Exit function
   }
 };

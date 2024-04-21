@@ -1,4 +1,14 @@
 const mongoose = require('mongoose');
+const informationSchema = new mongoose.Schema({
+  ques: {
+    type: String,
+    
+  },
+  answer: {
+    type: String,
+    
+  }
+});
 const EmployeeSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -22,10 +32,7 @@ const EmployeeSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    Information:[{
-        type: Object,
-        
-    }],
+    Information:[informationSchema],
     password:{
         type: String,
         required: true

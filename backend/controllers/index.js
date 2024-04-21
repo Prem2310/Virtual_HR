@@ -104,11 +104,14 @@ const login = async (req, res) => {
 const updateEmployee = async (req, res) => {
   try {
     const { id } = req.params;
+    console.log(id);
+    console.log("hrr");
+    console.log(req.body);
     const { answers } = req.body;
-    if (!answers) {
-      return res.status(400).json({ message: "Please enter all fields" });
-    }
-    const employee = await Employee.findById(id);
+    // if (!answers) {
+    //   return res.status(400).json({ message: "Please enter all fields" });
+    // }
+    const employee = await Employee.findById(new mongoose.Types.ObjectId(id));
     if (!employee) {
       return res.status(404).json({ message: "Employee not found" });
     }
