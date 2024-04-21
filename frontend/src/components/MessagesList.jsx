@@ -3,10 +3,10 @@ import { useEffect, useRef } from "react";
 
 export const MessagesList = () => {
   const messages = useAITeacher((state) => state.messages);
-  const playMessage = useAITeacher((state) => state.playMessage);
-  const { currentMessage } = useAITeacher();
-  const english = useAITeacher((state) => state.english);
-  const furigana = useAITeacher((state) => state.furigana);
+  // const playMessage = useAITeacher((state) => state.playMessage);
+  // const { currentMessage } = useAITeacher();
+  // const english = useAITeacher((state) => state.english);
+  // const furigana = useAITeacher((state) => state.furigana);
   const classroom = useAITeacher((state) => state.classroom);
 
   const container = useRef();
@@ -18,28 +18,28 @@ export const MessagesList = () => {
     });
   }, [messages.length]);
 
-  const renderEnglish = (englishText) => (
-    <>
-      {english && (
-        <p className="text-4xl inline-block px-2 rounded-sm font-bold bg-clip-text text-transparent bg-gradient-to-br from-blue-300/90 to-white/90">
-          {englishText}
-        </p>
-      )}
-    </>
-  );
+  // const renderEnglish = (englishText) => (
+  //   <>
+  //     {english && (
+  //       <p className="text-4xl inline-block px-2 rounded-sm font-bold bg-clip-text text-transparent bg-gradient-to-br from-blue-300/90 to-white/90">
+  //         {englishText}
+  //       </p>
+  //     )}
+  //   </>
+  // );
 
-  const renderJapanese = (japanese) => (
-    <p className="text-white font-bold text-4xl mt-2 font-jp flex flex-wrap gap-1">
-      {japanese.map((word, i) => (
-        <span key={i} className="flex flex-col justify-end items-center">
-          {furigana && word.reading && (
-            <span className="text-2xl text-white/65">{word.reading}</span>
-          )}
-          {word.word}
-        </span>
-      ))}
-    </p>
-  );
+  // const renderJapanese = (japanese) => (
+  //   <p className="text-white font-bold text-4xl mt-2 font-jp flex flex-wrap gap-1">
+  //     {japanese.map((word, i) => (
+  //       <span key={i} className="flex flex-col justify-end items-center">
+  //         {furigana && word.reading && (
+  //           <span className="text-2xl text-white/65">{word.reading}</span>
+  //         )}
+  //         {word.word}
+  //       </span>
+  //     ))}
+  //   </p>
+  // );
 
   return (
     <div
@@ -50,7 +50,7 @@ export const MessagesList = () => {
       } p-8 overflow-y-auto flex flex-col space-y-8 bg-transparent opacity-80`}
       ref={container}
     >
-      {messages.length === 0 && (
+      {/* {messages.length === 0 && (
         <div className="h-full w-full grid place-content-center text-center">
           <h2 className="text-8xl font-bold text-white/90 italic">
             Wawa Sensei
@@ -165,7 +165,7 @@ export const MessagesList = () => {
             ))}
           </div>
         </div>
-      ))}
+      ))} */}
     </div>
   );
 };

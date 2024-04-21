@@ -4,7 +4,6 @@ import {
   CameraControls,
   Environment,
   Float,
-  Gltf,
   Html,
   Loader,
   useGLTF,
@@ -46,7 +45,7 @@ export const Experience = () => {
   const classroom = useAITeacher((state) => state.classroom);
 
   return (
-    <>
+    <div className='!important w-screen h-screen'>
       <div className="z-10 md:justify-center fixed bottom-4 left-4 right-4 flex gap-3 flex-wrap justify-stretch">
         <TypingBox />
       </div>
@@ -70,7 +69,7 @@ export const Experience = () => {
               <BoardSettings />
             </Html>
             <Environment preset="sunset" />
-            <ambientLight intensity={0.8} color="pink" />
+            <ambientLight color="pink" />
 
             {/* <Gltf
               src={`/models/classroom_${classroom}.glb`}
@@ -86,7 +85,7 @@ export const Experience = () => {
           </Float>
         </Suspense>
       </Canvas>
-    </>
+    </div>
   );
 };
 

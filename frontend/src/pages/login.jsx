@@ -139,9 +139,9 @@ export default function Login() {
           <img src={LoginImg} className="h-4/6 w-4/6 m-auto" alt="" />
           <div>
             <div className="opacity-60">
-              "This website has been a valuable resource for my husband and me,
+              This website has been a valuable resource for my husband and me,
               eliminating the need for us to travel long distances for our daily
-              checkups"
+              checkups
             </div>
             <div className="opacity-90 mt-3"> - Sophia Danis</div>
           </div>
