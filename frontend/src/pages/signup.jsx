@@ -21,16 +21,16 @@ export default function SignUp() {
       role: roleRef.current.value,
       phone: phoneRef.current.value,
       gender: genderRef.current.value,
-      password: passwordRef.current.value
+      password: passwordRef.current.value,
     };
 
     try {
       const response = await fetch(`${URL}/api/v1/signup`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(userData)
+        body: JSON.stringify(userData),
       });
 
       if (response.ok) {
@@ -48,112 +48,116 @@ export default function SignUp() {
   }
 
   return (
-    <section className="grid grid-cols-2 h-screen font-inter">
-      <main className="p-16">
-        <h1 className="font-bricolage text-4xl font-bold">Sign Up</h1>
-        <p className="text-sm opacity-40 mt-1">
-          Already have an account?{" "}
-          <span
-            className="underline cursor-pointer"
-            onClick={() => {
-              navigate("/login");
-            }}
-          >
-            Sign in
-          </span>
-        </p>
-        <div className="mt-4 flex gap-10">
-          <div>
-            <label htmlFor="" className="opacity-70">
-              Name
-            </label>
-            <br />
-            <input
-              type="text"
-              className="bg-transparent border-2 border-[#52525c] rounded-md p-2"
-              ref={firstNameRef}
-            />
+    <div className="bg-black">
+      <section className="grid grid-cols-2 h-screen font-inter">
+        <main className="p-16">
+          <h1 className="text-white font-bricolage text-4xl font-bold">
+            Sign Up
+          </h1>
+          <p className="text-white text-sm opacity-40 mt-1">
+            Already have an account?{" "}
+            <span
+              className="underline cursor-pointer"
+              onClick={() => {
+                navigate("/login");
+              }}
+            >
+              Sign in
+            </span>
+          </p>
+          <div className="mt-4 flex gap-10">
+            <div>
+              <label htmlFor="" className="text-white opacity-70">
+                Name
+              </label>
+              <br />
+              <input
+                type="text"
+                className="bg-transparent text-white border-2 border-[#52525c] rounded-md p-2"
+                ref={firstNameRef}
+              />
+            </div>
+            <div>
+              <label htmlFor="" className="text-white opacity-70">
+                Email
+              </label>
+              <br />
+              <input
+                type="email"
+                className="bg-transparent text-white border-2 border-[#52525c] rounded-md p-2 "
+                ref={emailRef}
+              />
+            </div>
           </div>
-          <div>
-            <label htmlFor="" className="opacity-70">
-              Email
-            </label>
-            <br />
-            <input
-              type="email"
-              className="bg-transparent border-2 border-[#52525c] rounded-md p-2 "
-              ref={emailRef}
-            />
-          </div>
-        </div>
-        <div className="mt-8 flex gap-10">
-          <div>
-            <label htmlFor="" className="opacity-70">
-              Role
-            </label>
-            <br />
-            <input
-              type="text"
-              className="bg-transparent border-2 border-[#52525c] rounded-md p-2 "
-              ref={roleRef}
-            />
-          </div>
-          <div>
-            <label htmlFor="" className="opacity-70">
-              Phone
-            </label>
-            <br />
-            <input
-              type="number"
-              className="bg-transparent border-2 border-[#52525c] rounded-md p-2 "
-              ref={phoneRef}
-            />
-          </div>
-        </div>
-
-        <div className="mt-8 flex gap-10">
-          <div className="flex">
+          <div className="text-white mt-8 flex gap-10">
             <div>
               <label htmlFor="" className="opacity-70">
-                Gender
+                Role
               </label>
               <br />
               <input
                 type="text"
                 className="bg-transparent border-2 border-[#52525c] rounded-md p-2 "
-                ref={genderRef}
+                ref={roleRef}
               />
             </div>
+            <div>
+              <label htmlFor="" className="text-white opacity-70">
+                Phone
+              </label>
+              <br />
+              <input
+                type="text"
+                className="bg-transparent border-2 border-[#52525c] rounded-md p-2 "
+                ref={phoneRef}
+              />
+            </div>
+          </div>
 
-            <div className=" flex gap-10">
+          <div className="mt-8 text-white flex gap-10">
+            <div className="flex gap-10">
               <div>
                 <label htmlFor="" className="opacity-70">
-                  Password
+                  Gender
                 </label>
                 <br />
                 <input
-                  type="password"
+                  type="text"
                   className="bg-transparent border-2 border-[#52525c] rounded-md p-2 "
-                  ref={passwordRef}
+                  ref={genderRef}
                 />
+              </div>
+
+              <div className=" flex gap-10">
+                <div>
+                  <label htmlFor="" className="opacity-70">
+                    Password
+                  </label>
+                  <br />
+                  <input
+                    type="password"
+                    className="bg-transparent border-2 border-[#52525c] rounded-md p-2 "
+                    ref={passwordRef}
+                  />
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <button
-          onClick={completeSignup}
-          className="text-lg bg-[#1569cb] font-inter py-3 rounded-full text-center cursor-pointer hover:opacity-80 transition-opacity w-[75%] mt-4"
-        >
-          Sign Up
-        </button>
-      </main>
-      <img
-        src={SignUpImage}
-        alt="Sign Up Image"
-        className="h-[95vh] w-[95vw]"
-      />
-      <ToastContainer />
-    </section>
+          <button
+            onClick={completeSignup}
+            className="text-white text-lg bg-[#1569cb] font-inter py-3 rounded-full text-center cursor-pointer hover:opacity-80 transition-opacity w-[75%] mt-4"
+          >
+            Sign Up
+          </button>
+        </main>
+        <img
+          src={SignUpImage}
+          alt="Sign Up Image"
+          className="h-[95vh] w-[95vw]"
+        />
+        <ToastContainer />
+      </section>
+    </div>
   );
 }

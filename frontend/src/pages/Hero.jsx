@@ -13,23 +13,23 @@ export default function Home() {
       <HomeNavbar />
       <hr className="border-0 border-t-2 border-[#0f0f11]" />
       <div className="flex flex-col items-center gap-7 mt-16">
-        <div className="bg-[#27272a] flex text-xs w-fit px-5 py-2 rounded-full items-center gap-2 border-2 border-[#3f3f46] cursor-pointer hover:border-[#a8a8a8] transition-colors">
+        <div className="bg-[#27272a] text-white flex text-xs w-fit px-5 py-2 rounded-full items-center gap-2 border-2 border-[#3f3f46] cursor-pointer hover:border-[#a8a8a8] transition-colors">
           Virtual HR
           <FaGithub></FaGithub>
         </div>
         <div className="text-white text-6xl font-medium">
           Elevating Conversations, Evaluating Talent
         </div>
-        <div className="font-inter text-white">
+        <div className="font-inter text-white mt-5">
           Revolutionizing HR Interviews: Empowering Managers, Guiding
           Candidates, Shaping Futures.
         </div>
-        <div className="font-inter flex gap-10 z-10   ">
-          <div className="bg-[#27272a] text-xl w-fit px-8 py-3 rounded-md border-2 border-[#3f3f46] cursor-pointer hover:border-[#a8a8a8] transition-colors">
+        <div className="font-inter flex gap-10 z-10 mt-10   ">
+          <div className="bg-[#27272a] text-xl w-fit px-8 py-3 rounded-md border-2 border-[#3f3f46] text-white cursor-pointer hover:border-[#a8a8a8] transition-colors">
             Features
           </div>
           <div
-            className="bg-[#166fd8] text-xl w-fit px-8 py-3 rounded-md cursor-pointer hover:bg-blue-500 transition-colors"
+            className="bg-[#166fd8] text-xl w-fit px-8 py-3 rounded-md cursor-pointer  text-white hover:bg-blue-500 transition-colors"
             onClick={() => navigate("/signup")}
           >
             Lets Begin

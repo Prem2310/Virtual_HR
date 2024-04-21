@@ -12,8 +12,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [show, setShow] = useState(false);
 
-  const formSubmit = async(e) => {
-    
+  const formSubmit = async (e) => {
     e.preventDefault();
     if (email === "" || password === "") {
       toast.error("Please fill all the fields", {
@@ -68,20 +67,20 @@ export default function Login() {
   };
 
   return (
-    <div>
+    <div className="bg-black">
       <div className="flex w-screen h-screen">
         <div className="w-full p-12 pb-0 ">
           <div className="w-4/6">
             <div>
-              <div className="text-6xl font-bricolage font-bold">
+              <div className="text-6xl text-white font-bricolage font-bold">
                 Welcome Back
               </div>
-              <div className="font-inter opacity-60 text-base">
+              <div className="font-inter opacity-60 text-gray-300 text-base">
                 We hope your are doing well
               </div>
             </div>
             <form action="" className="mt-16 flex flex-col gap-5 ">
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col  text-white gap-2">
                 <label htmlFor="username">Email</label>
                 <input
                   type="text"
@@ -89,7 +88,7 @@ export default function Login() {
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
-              <div className="flex flex-col gap-2">
+              <div className="text-white flex flex-col gap-2">
                 <label htmlFor="password">Password</label>
                 <div className="flex">
                   <input
@@ -106,13 +105,13 @@ export default function Login() {
                 </div>
               </div>
               <button
-                className="text-lg bg-[#1569cb] font-inter py-3 rounded-full text-center cursor-pointer hover:opacity-80 transition-opacity"
+                className="text-white text-lg bg-[#1569cb] font-inter py-3 rounded-full text-center cursor-pointer hover:opacity-80 transition-opacity"
                 onClick={formSubmit}
               >
                 Sign in
               </button>
             </form>
-            <div className="flex justify-between text-xs ">
+            <div className="text-white flex justify-between text-xs ">
               <a href="/signup">
                 <div className="opacity-60">
                   {/* eslint-disable-next-line react/no-unescaped-entities */}
@@ -128,21 +127,20 @@ export default function Login() {
             </div>
           </div>
         </div>
-        <div className="w-11/12 bg-[#1a1a1d] h-screen p-12 flex flex-col justify-between">
+        <div className=" text-white w-11/12 bg-[#1a1a1d] h-screen p-12 flex flex-col justify-between">
           <a href="/">
             <div className="text-3xl cursor-pointer">
-              Health
-              <span className="font-semibold">Sync</span>
+              Virtual
+              <span className="font-semibold">HR</span>
             </div>
           </a>
           <img src={LoginImg} className="h-4/6 w-4/6 m-auto" alt="" />
           <div>
-            <div className="opacity-60">
-              This website has been a valuable resource for my husband and me,
-              eliminating the need for us to travel long distances for our daily
-              checkups
+            <div className=" text-white opacity-60">
+              Start your interview journey and let your voice be heard. Answer
+              questions and express yourself freely in our interview
+              environment.
             </div>
-            <div className="opacity-90 mt-3"> - Sophia Danis</div>
           </div>
         </div>
       </div>
