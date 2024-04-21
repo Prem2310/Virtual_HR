@@ -1,23 +1,50 @@
-import SignUpImage from "../assets/images/signup.png";
-import { useNavigate } from "react-router-dom";
 import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import SignUpImage from "../assets/images/signup.png";
 
 export default function SignUp() {
   const URL = "http://localhost:3000";
   const navigate = useNavigate();
   const firstNameRef = useRef();
-  const lastNameRef = useRef();
-  const ageRef = useRef();
-  const bloodGroupRef = useRef();
-  const addressRef = useRef();
-  const phoneRef = useRef();
   const emailRef = useRef();
+  const roleRef = useRef();
+  const phoneRef = useRef();
+  const genderRef = useRef();
   const passwordRef = useRef();
-  function completeSignup() {
-    //redirect to login page
-    navigate("/login");
+
+  async function completeSignup() {
+    const userData = {
+      Name: firstNameRef.current.value,
+      email: emailRef.current.value,
+      role: roleRef.current.value,
+      phone: phoneRef.current.value,
+      gender: genderRef.current.value,
+      password: passwordRef.current.value
+    };
+
+    try {
+      const response = await fetch(`${URL}/signup`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(userData)
+      });
+
+      if (response.ok) {
+        // Signup successful
+        navigate("/login");
+      } else {
+        // Signup failed
+        const errorMessage = await response.text();
+        toast.error(errorMessage);
+      }
+    } catch (error) {
+      console.error("Error signing up:", error);
+      toast.error("Error signing up. Please try again later.");
+    }
   }
 
   return (
@@ -29,7 +56,7 @@ export default function SignUp() {
           <span
             className="underline cursor-pointer"
             onClick={() => {
-              navigate("/auth/signin");
+              navigate("/login");
             }}
           >
             Sign in
@@ -53,9 +80,9 @@ export default function SignUp() {
             </label>
             <br />
             <input
-              type="text"
+              type="email"
               className="bg-transparent border-2 border-[#52525c] rounded-md p-2 "
-              ref={lastNameRef}
+              ref={emailRef}
             />
           </div>
         </div>
@@ -68,7 +95,7 @@ export default function SignUp() {
             <input
               type="text"
               className="bg-transparent border-2 border-[#52525c] rounded-md p-2 "
-              ref={emailRef}
+              ref={roleRef}
             />
           </div>
           <div>
@@ -94,7 +121,7 @@ export default function SignUp() {
               <input
                 type="text"
                 className="bg-transparent border-2 border-[#52525c] rounded-md p-2 "
-                ref={bloodGroupRef}
+                ref={genderRef}
               />
             </div>
 
@@ -124,7 +151,7 @@ export default function SignUp() {
       <img
         src={SignUpImage}
         alt="Sign Up Image"
-        className="h-[95vh] w=[95vw]"
+        className="h-[95vh] w-[95vw]"
       />
       <ToastContainer />
     </section>

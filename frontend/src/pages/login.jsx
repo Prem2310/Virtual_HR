@@ -12,8 +12,8 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [show, setShow] = useState(false);
 
-  const formSubmit = (e) => {
-    navigate("/home");
+  const formSubmit = async(e) => {
+    
     e.preventDefault();
     if (email === "" || password === "") {
       toast.error("Please fill all the fields", {
@@ -31,7 +31,7 @@ export default function Login() {
       email,
       password,
     };
-    fetch(`${URL}/api/v1/auth/login`, {
+    await fetch(`${URL}/api/v1/auth/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -62,7 +62,7 @@ export default function Login() {
             progress: undefined,
           });
           setTimeout(() => {
-            navigate("/Home");
+            navigate("/Experience");
           }, 2000);
         }
       });

@@ -35,11 +35,22 @@ const Admin = () => {
         const allUsersJson = await res.json();
         console.log(allUsersJson);
         setAllUsers(allUsersJson);
-
+        const options ={
+          delimiter:{
+            field:',',
+            wrap:'"',
+            col:"/n",
+      
+          },
+          emptyFieldValue: '', // Value that substitutes for undefined, null, or empty string
+          escapeHeaderNestedDots: true 
+        }
+        
         const filesArray = [];
         for (let i = 0; i < allUsersJson.length; i++) {
-          const fileOne = allUsersJson.Information[i];
-          const csv = await json2csv(fileOne);
+          const fileOne = allUsersJson[i].Information;
+          console.log(fileOne);
+          const csv = await json2csv(fileOne, options); // Add the options object as the second argument
           filesArray.push(csv);
         }
         setFiles(filesArray);
@@ -53,38 +64,48 @@ const Admin = () => {
   }, []);
 
   return (
-    <div>
-      {allUsers.length > 0 ? (
-        allUsers.map((user, index) => (
-          <div key={index}>
-            <h1>{user.name}</h1>
-            <h2>{user.email}</h2>
-            <h3>{user.mobileNumber}</h3>
-            <h4>{user.role}</h4>
-            <input type="file" onChange={handleFileChange} accept=".csv" />
-            {files[index] && (
-              <div>
-                <button
-                  onClick={() =>
-                    handleDownloadCsv(
-                      files[index],
-                      `user_${index}.csv`
-                    )
-                  }
-                >
-                  Download CSV
-                </button>
-                <div>
-                  <pre>{files[index]}</pre>
-                </div>
+<div className="flex flex-wrap gap-4 justify-center">
+  {allUsers.length > 0 ? (
+    allUsers.map((user, index) => (
+      <div key={index} className="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 bg-white p-4 rounded-md shadow-md">
+        <div className="mb-4">
+          <h1 className="text-lg font-semibold">Name: {user.name}</h1>
+          <h2 className="text-sm text-gray-600">Email: {user.email}</h2>
+        </div>
+        <div className="mb-4">
+          <h3 className="text-sm">Mobile Number: {user.mobileNumber}</h3>
+          <h4 className="text-sm">Role: {user.role}</h4>
+        </div>
+        <div>
+          <input
+            type="file"
+            onChange={handleFileChange}
+            accept=".csv"
+            className="mb-2"
+          />
+          {files[index] && (
+            <div>
+              <button
+                onClick={() =>
+                  handleDownloadCsv(files[index], `user_${index}.csv`)
+                }
+                className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+              >
+                Download CSV
+              </button>
+              <div className="mt-2">
+                <pre>{files[index]}</pre>
               </div>
-            )}
-          </div>
-        ))
-      ) : (
-        <h1>NO user found</h1>
-      )}
-    </div>
+            </div>
+          )}
+        </div>
+      </div>
+    ))
+  ) : (
+    <h1 className="text-lg font-semibold text-center w-full">NO user found</h1>
+  )}
+</div>
+
   );
 };
 
