@@ -1,17 +1,8 @@
+import Experience from "../components/Experience";
+import Admin from "../pages/Admin";
 const Home = () => {
-    const api = 'http://localhost:3000';
-  const questions = [
-    'Tell me about yourself',
-    'What was your percentage in the last semester?',
-    "What's the project you have done?",
-    'Why should we hire you?',
-    'Do you have any experience or internship done for the same role?',
-  ];
-
-  return (
-
-<h1>Home</h1>
-  );
+  const isAdmin = true;
+  return isAdmin | true ? <Admin /> : <Experience />;
 };
 
 export default Home;
