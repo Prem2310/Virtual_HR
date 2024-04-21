@@ -78,12 +78,12 @@ const Admin = () => {
               <h4 className="text-sm">Role: {user.role}</h4>
             </div>
             <div>
-              <input
+              {/* <input
                 type="file"
                 onChange={handleFileChange}
                 accept=".csv"
                 className="mb-2"
-              />
+              /> */}
               {files[index] && (
                 <div>
                   <button
