@@ -56,7 +56,7 @@ function Navbar() {
               <div
                 className="border-2 border-white px-2 py-1 rounded-xl cursor-pointer"
                 onClick={() => {
-                  navigate("/patient/dashboard");
+                  navigate("/login");
                 }}
               >
                 {" "}
