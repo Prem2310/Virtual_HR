@@ -14,7 +14,7 @@ export const TypingBox = () => {
   const [endconvo, setEndconvo] = useState(false);
   // const askAI = useAITeacher((state) => state.askAI);
   // const loading = useAITeacher((state) => state.loading);
-  const [question, setQuestion] = useState("");
+  const [question, setQuestion] = useState(questions[0]);
   const [isListening, setIsListening] = useState(false);
   const [inputText, setInputText] = useState("");
   const [start, setStart] = useState(true);
@@ -64,9 +64,9 @@ export const TypingBox = () => {
     }
   };
   const handleStart = async () => {
-    handleTextToSpeech();
     const currentIndex = questions.indexOf(question);
     setQuestion(questions[currentIndex + 1]);
+    handleTextToSpeech();
     setStart(false);
   };
 
@@ -85,33 +85,22 @@ export const TypingBox = () => {
       console.error("Speech synthesis not supported");
     }
   };
-  const handleSaveText = () => {
-    setSavedTextObject((prev) => {
-      const newTextObject = { question: question, answer: inputText };
-      if (!prev) {
-        return [newTextObject];
-      }
-      return [...prev, newTextObject];
-    });
+const handleSaveText = () => {
+  // Logic for updating the question
+  const currentIndex = questions.indexOf(question);
+  if (currentIndex < questions.length - 1) {
+    handleTextToSpeech();
+    setQuestion(questions[currentIndex + 1]); // Move to the next question
+  }
+  
+  // Logic for ending the conversation
+  if (currentIndex === questions.length - 1) {
+    setEndconvo(true); // Set end conversation flag to true
+    update(); // Update saved text or perform other necessary actions
+    return; // Exit function
+  }
+};
 
-    // Logic for updating the question
-    if (questions && questions.length > 0) {
-      const currentIndex = questions.indexOf(question - 1);
-      if (currentIndex < questions.length - 1) {
-        handleTextToSpeech();
-        setQuestion(questions[currentIndex]);
-      }
-      // setInputText("");
-    }
-
-    // Logic for ending the conversation
-    const newcurrentIndex = questions.indexOf(question);
-    if (newcurrentIndex === questions.length - 1) {
-      setEndconvo(true);
-      update();
-      return;
-    }
-  };
 
   return (
     <div className="z-10 max-w-[1000px] w-60 h-30 flex space-y-6 flex-col bg-gradient-to-tr  from-slate-300/30 via-gray-400/30 to-slate-600-400/30 p-4  backdrop-blur-md rounded-xl border-slate-100/30 border">
@@ -123,7 +112,7 @@ export const TypingBox = () => {
               start === false ? "disabled" : "visible"
             } text-1.5xl bg-gray-800 p-2 px-6 rounded-full text-white hover:bg-black-500 hover:text-gray-400 transition-colors`}
           >
-            {start ? "Start the Interview" : question}
+            {start ? "Start the Interview" : questions[questions.indexOf(question)-1]}
           </button>
           <div className="flex pt-4 gap-3">
             <button
