@@ -1,10 +1,4 @@
-<<<<<<< HEAD
-/* #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-=======
+
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@200;300;400;500;600;700;800&display=swap");
 
@@ -14,7 +8,7 @@
 /* width */
 ::-webkit-scrollbar {
   width: 10px;
->>>>>>> cae2ee86da2e7dc0d250aa1948b1b57d58ded760
+
 }
 
 /* Track */
