@@ -14,7 +14,7 @@ export const TypingBox = () => {
   const [endconvo, setEndconvo] = useState(false);
   // const askAI = useAITeacher((state) => state.askAI);
   // const loading = useAITeacher((state) => state.loading);
-  const [question, setQuestion] = useState(questions[0]);
+  const [question, setQuestion] = useState("");
   const [isListening, setIsListening] = useState(false);
   const [inputText, setInputText] = useState("");
   const [start, setStart] = useState(true);
@@ -65,8 +65,8 @@ export const TypingBox = () => {
   };
   const handleStart = async () => {
     handleTextToSpeech();
-    //  const currentIndex = questions.indexOf(question);
-    // setQuestion(questions[currentIndex + 1]);
+      const currentIndex = questions.indexOf(question);
+     setQuestion(questions[currentIndex + 1]);
     setStart(false);
   };
 
@@ -89,7 +89,7 @@ export const TypingBox = () => {
     setSavedTextObject((prev) => {
       const newTextObject = { question: question, answer: inputText };
       if (!prev) {
-        return savedTextObject[newTextObject];
+        return [newTextObject];
       }
       return [...prev, newTextObject];
     });
@@ -101,7 +101,7 @@ export const TypingBox = () => {
         handleTextToSpeech();
         setQuestion(questions[currentIndex + 1]);
       }
-      setInputText("");
+      // setInputText("");
     }
 
     // Logic for ending the conversation

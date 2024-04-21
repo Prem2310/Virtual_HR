@@ -24,7 +24,7 @@ const itemPlacement = {
       position: [0.2, -1.7, -2],
     },
     teacher: {
-      position: [-2, -1.7, -3],
+      position: [-2, -2, -3],
     },
     board: {
       position: [0.45, 0.382, -6],
@@ -86,8 +86,8 @@ export const Experience = () => {
                   teacher={teacher}
                   key={teacher}
                   {...itemPlacement[classroom].teacher}
-                  scale={1.5}
-                  rotation-y={degToRad(20)}
+                  scale={2}
+                  rotation-y={degToRad(40)}
                 />
               </Float>
             </Suspense>

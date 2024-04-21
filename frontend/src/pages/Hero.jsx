@@ -32,7 +32,7 @@ export default function Home() {
             className="bg-[#166fd8] text-xl w-fit px-8 py-3 rounded-md cursor-pointer hover:bg-blue-500 transition-colors"
             onClick={() => navigate("/signup")}
           >
-            Let's Begin
+            Lets Begin
           </div>
         </div>
       </div>
@@ -110,7 +110,7 @@ export default function Home() {
                 Realistic Avatar Behavior
               </div>
               <div className="font-inter text-base font-light opacity-80">
-                The virtual HR manager's avatar is designed to exhibit realistic
+                The virtual HR managers avatar is designed to exhibit realistic
                 lip syncing and facial expressions, enhancing the authenticity
                 of the interaction.
               </div>

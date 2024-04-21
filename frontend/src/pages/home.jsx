@@ -1,8 +1,8 @@
 // import Experience from "../components/Experience";
-// import Admin from "../pages/Admin";
+import Admin from "../pages/Admin";
 const Home = () => {
   // const isAdmin = true;
-  return <h1>Home</h1>;
+  return <Admin/>
 };
 
 export default Home;
