@@ -71,10 +71,10 @@ export const Experience = () => {
             <Environment preset="sunset" />
             <ambientLight intensity={0.8} color="pink" />
 
-            {/* <Gltf
+            <Gltf
               src={`/models/classroom_${classroom}.glb`}
               {...itemPlacement[classroom].classroom}
-            /> */}
+            />
             <Teacher
               teacher={teacher}
               key={teacher}
