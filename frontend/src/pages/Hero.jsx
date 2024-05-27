@@ -1,3 +1,6 @@
+
+
+
 import { FaGithub } from "react-icons/fa6";
 import Graph from "../assets/Graph.svg";
 import Grad from "../assets/Hero Shape.svg";

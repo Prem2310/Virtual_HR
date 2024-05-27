@@ -21,43 +21,119 @@ export const useAITeacher = create((set, get) => ({
     }));
   },
   loading: false,
-  furigana: true,
-  setFurigana: (furigana) => {
-    set(() => ({
-      furigana,
-    }));
-  },
-  english: true,
-  setEnglish: (english) => {
-    set(() => ({
-      english,
-    }));
-  },
+  // furigana: true,
+  // setFurigana: (furigana) => {
+  //   set(() => ({
+  //     furigana,
+  //   }));
+  // },
+  // english: true,
+  // setEnglish: (english) => {
+  //   set(() => ({
+  //     english,
+  //   }));
+  // },
   speech: "formal",
   setSpeech: (speech) => {
     set(() => ({
       speech,
     }));
   },
-  askAI: async (question) => {
+  startconvo:async()=>{
+    const inimsg = "Hello , You are an HR manager virtual assistant. Your task is to ask questions to the candidate .lets start the interview ,Ask first question .In last message when you  end the interview first character should be rating of the interview 1-10 and end it by saying 'Goodbye!'.";
+    set(() => ({
+      loading: true,
+    }));
+    const res = await fetch(`http://localhost:3000/api/v1/startinterview`,{
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        message: inimsg,
+      }),
+    });
+    console.log(res);
+    console.log("interview started");
+    const data = await res.json();
+    // const message = {
+    //   question: inimsg,
+    //   id: get().messages.length,
+    // };
+    const message = {
+      question: data.content,
+    }
+    set(() => ({
+      currentMessage: message,
+    }));
+
+    set((state) => ({
+      messages: [...state.messages, message],
+      loading: false,
+    }));
+    //get().playMessage(message);
+
+
+
+  }
+  ,
+  endInterview:async(messages,rating)=>{
+    set(() => ({
+      loading: true,
+    }));
+    const res = fetch(`http://localhost:3000/api/v1/endinterview`,{
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        messages,
+        rating,
+      }),
+    });
+    const data = await res.json();
+    console.log("interview ended",data);
+    set(() => ({
+      loading: false,
+    }));
+  },
+    
+  askAI: async (question,fullcontext) => {
     if (!question) {
       return;
     }
-    const message = {
-      question,
-      id: get().messages.length,
-    };
+    console.log(question);
+    console.log(fullcontext);
+    const prevmsg = get().messages[get().messages.length - 1];
+    prevmsg.answer = question;
+    // const message = {
+    //   question,
+    //   id: get().messages.length,
+    // };
     set(() => ({
       loading: true,
     }));
 
-    const speech = get().speech;
+    //const speech = get().speech;
 
     // Ask AI
-    const res = await fetch(`/api/ai?question=${question}&speech=${speech}`);
+    const res  = await fetch(`http://localhost:3000/api/v1/askquestion`,
+      {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        message: fullcontext,
+      }
+    )});
     const data = await res.json();
-    message.answer = data;
-    message.speech = speech;
+    const message = {
+      question: data.content,
+    }
+    
+    // message.answer = data;
+    // message.speech = speech;
 
     set(() => ({
       currentMessage: message,
@@ -67,7 +143,7 @@ export const useAITeacher = create((set, get) => ({
       messages: [...state.messages, message],
       loading: false,
     }));
-    get().playMessage(message);
+    //get().playMessage(message);
   },
   playMessage: async (message) => {
     set(() => ({

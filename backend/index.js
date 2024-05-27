@@ -2,7 +2,7 @@ const express = require("express");
 const dbConnect = require("./utils/dbConnect");
 const cors = require("cors");
 const axios = require("axios");
-const  {signup,login, updateEmployee, getEmployee, getEmployees,getquestion } = require("./controllers/index");
+const  {signup,login, updateEmployee, getEmployee, getEmployees,getquestion,startinterview,askquestion,endInterview } = require("./controllers/index");
 const {auth,isEmployee,isAdmin} = require("./middleware/indexx");
 const app = express();
 
@@ -19,10 +19,12 @@ app.get("/", (req, res) => {
 ); 
 app.post("/api/v1/signup",signup);
 app.post("/api/v1/login",login);
-app.post("/api/v1/getquestion", getquestion);
-app.put("/api/v1/updateemployee/:id",updateEmployee);
+app.post("/api/v1/askquestion", askquestion);
+app.post("/api/v1/startinterview",startinterview);
+// app.put("/api/v1/updateemployee/:id",updateEmployee);
 app.get('/api/v1/getemployee/:id',getEmployee);
 app.get('/api/v1/getemployees',getEmployees);
+app.post("/api/v1/endinterview",endInterview);
 dbConnect();
 
    

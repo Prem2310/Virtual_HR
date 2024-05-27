@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const informationSchema = new mongoose.Schema({
-  ques: {
+  question: {
     type: String,
     
   },
@@ -41,6 +41,10 @@ const EmployeeSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    rating:{
+        type: Number,
+        default: 0,
+    }
     
 });
 module.exports = mongoose.model('Employee', EmployeeSchema);

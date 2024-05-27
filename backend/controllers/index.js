@@ -3,8 +3,8 @@ const Employee = require("../models/Employee");
 const bcrypt = require("bcrypt");
 const axios = require("axios");
 const jwt = require("jsonwebtoken");
-const OpenAI = require("openai");
-
+// const OpenAI = require("openai");
+const { default: ollama } = require('ollama');
 require("dotenv").config();
 const signup = async (req, res) => {
   try {
@@ -155,6 +155,53 @@ const questions = [
   "Why should we hire you?",
   "Do you have any experience or internship done for the same role?",
 ];
+const startinterview = async (req, res) => {
+  try{
+    const { message } = req.body;
+    console.log(message);
+    const apidatastructure = [{role:'user',content:message}];
+    const data = await ollama.chat({
+      model: "llama3",
+      messages: apidatastructure,
+      stream: false,
+    });
+    console.log(data);
+    return res.status(200).json({content:data.message.content});
+    
+
+  }catch(err){
+    console.log(err);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+}
+const askquestion= async (req, res) => {
+  try{
+    const { message } = req.body;
+    const data = await ollama.chat({
+      model: "llama3",
+      messages: message,
+      stream: false,
+    });
+    return res.json({content:data.message.content});
+  }catch(err){
+
+  }
+}
+const endInterview = async (req, res) => {
+  try {
+    const user = await Employee.findById(req.user.id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    user.rating = req.body.rating;
+    user.Information = req.body.messages;
+    await user.save();
+    return res.status(200).json({ message: "Interview ended successfully",user });
+  } catch (error) {
+    console.log("Error ending interview:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+}
 const getquestion = async (req, res) => {
   console.log(req);
 
@@ -197,39 +244,8 @@ const getquestion = async (req, res) => {
       .json({ error: "An error occurred while processing the request." });
   }
 };
-// console.log("hello");
-// const { currentQuestionIndex, previousResponse } = req.body;
+ 
 
-// if (currentQuestionIndex >= questions.length) {
-//   return res.status(200).json({ message: 'All questions have been answered.' });
-// }
-
-// const systemPrompt = 'You are an HR manager conducting an interview. Ask the candidate a question. If you are done with all the question end the interview with just "Thankyou" ';
-// const userPrompt = `${previousResponse} . Any other questions ?` || questions[currentQuestionIndex];
-
-// const messages = [
-//   { role: 'system', content: systemPrompt },
-//   { role: 'user', content: userPrompt },
-// ];
-// const data = {
-//   model: 'gpt-3.5-turbo',
-//   messages,
-//   temperature: 0.7,
-// };
-
-// const headers = {
-//   'Content-Type': 'application/json',
-//   'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
-// };
-
-// const response = await axios.post(process.env.OPENAI_API_URL, data, { headers });
-// const result = response.data.choices[0].message.content;
-//  return res.status(200).json({ question: userPrompt, result });
-//   } catch (error) {
-//     console.error('Error:', error);
-//     return res.status(500).json({ error: 'An error occurred while fetching the question.' });
-//   }
-// };
 module.exports = {
   login,
   signup,
@@ -237,4 +253,8 @@ module.exports = {
   getEmployee,
   getEmployees,
   getquestion,
+  startinterview,
+  askquestion,
+  endInterview,
+  
 };
